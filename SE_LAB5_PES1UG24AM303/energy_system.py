@@ -1,4 +1,4 @@
-
+"""Energy Tariff Management System for Lab 5 Static Code Analysis."""
 
 import ast
 import json
@@ -72,7 +72,10 @@ if __name__ == "__main__":
     ) or "0"
 
     # Fixed using ast.literal_eval instead of insecure eval()
-    record_reading("M-01", ast.literal_eval(adjustment))
+    try:
+        record_reading("M-01", ast.literal_eval(adjustment))
+    except (ValueError, SyntaxError):
+        print("Invalid input; no adjustment recorded.")
     save_meter_data()
 
     print(f"Bill M-01 after reload: {calculate_bill('M-01'):.2f}")
